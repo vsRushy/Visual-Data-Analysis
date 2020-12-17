@@ -7,11 +7,6 @@ public class CameraSwitcher : MonoBehaviour
     public GameObject main_camera;
     public GameObject heatmap_camera;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.C))
