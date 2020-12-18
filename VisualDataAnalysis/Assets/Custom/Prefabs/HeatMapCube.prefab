@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 936023596912218373}
   m_Layer: 0
   m_Name: HeatMapCube
-  m_TagString: Untagged
+  m_TagString: HeatMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
