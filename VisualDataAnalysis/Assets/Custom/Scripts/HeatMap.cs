@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Generate all the cubes at first and then disable them? Or generate them over time? Check for efficiency
 public class HeatMap : MonoBehaviour
 {
     public int width = 20;
