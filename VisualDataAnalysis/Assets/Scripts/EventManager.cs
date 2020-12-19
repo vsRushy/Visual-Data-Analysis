@@ -21,7 +21,7 @@ public class EventManager : MonoBehaviour
 
     public static EventManager eventManager;
 
-    public List<Eventinfo> events;
+    public Queue<Eventinfo> events;
 
     public static List<Eventinfo> carlosEvents = new List<Eventinfo>();
     public static List<Eventinfo> sebiEvents = new List<Eventinfo>();
@@ -46,26 +46,43 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // Only used for position right now since its the only "contiunous" event
         if ((currentEventIntervalSecTime += Time.deltaTime) >= eventIntervalSecTime)
         {
             currentEventIntervalSecTime = 0.0f;
 
             // add new position event
-            events.Add(new Eventinfo(playerName, "Position", System.DateTime.Now, player.transform.position, stage));
+            events.Enqueue(new Eventinfo(playerName, "Position", System.DateTime.Now, player.transform.position, stage));
+        }
+
+        if (events.Count == 0)
+            return;
+
+        // dispatch enqueued events
+        foreach(var e in events)
+        {
+            DispatchEvent(e);
+        }
+
+    }
+
+    public void AddEventByType(string type)
+    {
+        Eventinfo e = new Eventinfo(playerName, type, System.DateTime.Now, player.transform.position, stage);
+        events.Enqueue(e);
+    }
+
+
+    void DispatchEvent(Eventinfo e)
+    {
+        switch (e.type)
+        {
+            default:
+                break;
         }
     }
 
-    public void SortEventsByType()
-    {
-        events.Sort((x, y) => x.type.CompareTo(y.type));
-    }
 
-    public void AddEventToList(Eventinfo e)
-    {
-        events.Add(e);
-    }
 
 }
 
