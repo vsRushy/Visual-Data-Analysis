@@ -5,6 +5,20 @@ using System;
 
 public class EventManager : MonoBehaviour
 {
+    // name of the person playing the game
+    public string playerName = "Unnamed";
+
+    // to keep track of the stage
+    uint stage = 0;
+
+    // polling rate so as not to crate events every frame
+    public float eventIntervalSecTime = 0.5f;
+    float currentEventIntervalSecTime = 0.0f;
+
+    // reference to the player gameObject
+    public GameObject player;
+
+
     public static EventManager eventManager;
 
     public List<Eventinfo> events;
@@ -32,8 +46,27 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        // Only used for position right now since its the only "contiunous" event
+        if ((currentEventIntervalSecTime += Time.deltaTime) >= eventIntervalSecTime)
+        {
+            currentEventIntervalSecTime = 0.0f;
+
+            // add new position event
+            events.Add(new Eventinfo(playerName, "Position", System.DateTime.Now, player.transform.position, stage));
+        }
     }
+
+    public void SortEventsByType()
+    {
+        events.Sort((x, y) => x.type.CompareTo(y.type));
+    }
+
+    public void AddEventToList(Eventinfo e)
+    {
+        events.Add(e);
+    }
+
 }
 
 public struct Eventinfo

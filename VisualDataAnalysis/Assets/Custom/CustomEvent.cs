@@ -46,4 +46,5 @@ public class CustomEvent : MonoBehaviour
         this.type = type;
         this.position = position;
     }
+
 }
