@@ -1,12 +1,5 @@
 PlayerName,Event,Timestamp,Position_X,Position_Y,Position_Z,Stage
-Carlos,Position,18/12/2020 23:34:52,8,3,6,2
-Carlos,Position,18/12/2020 23:34:52,6,8,8,2
-Carlos,Position,18/12/2020 23:34:52,9,0,6,2
-Carlos,Position,18/12/2020 23:34:52,3,-10,5,2
-Carlos,Position,18/12/2020 23:34:52,3,-2,-6,2
-Carlos,Position,18/12/2020 23:34:52,-4,-8,6,2
-Carlos,Position,18/12/2020 23:34:52,4,-8,1,2
-Carlos,Position,18/12/2020 23:34:52,2,0,-2,2
-Carlos,Position,18/12/2020 23:34:52,4,9,5,2
-Carlos,Position,18/12/2020 23:34:52,-1,-10,7,2
+Sebi,Position,19/12/2020 0:53:49,2,1,2,1
+Carlos,Death,19/12/2020 0:53:49,2,1,2,2
+Doctor,Damage,19/12/2020 0:53:49,2,1,2,3
 
