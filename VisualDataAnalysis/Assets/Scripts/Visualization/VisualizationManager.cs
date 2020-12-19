@@ -41,22 +41,29 @@ public class VisualizationManager : MonoBehaviour
         ENTER_GAME
     }
 
+
+    // ------------------------ Filters ------------------------
     public User user_filter = User.All;
     public GraphType graph_type = GraphType.HEATMAP;
     public HeatmapFilter heatmap_filter = HeatmapFilter.POSITION;
     //public GraphFilter graph_filter = GraphFilter.Activate_Switch_1; // If we have time? xd
+
+    // ------------------------ Customization ------------------------
     public int width = 10;
     public int height = 10;
     public float tileSize = 0.9f;
     public float maxHeight = 20f;
-    public GameObject tileObj;
     public Gradient colorGradient;
+    public GameObject tileObj;
     [Range(0, 1)]
     public float alpha = 0.5f;
     public Vector3 offset;
-    private int maxCounts = 0;
 
+    // ------------------------ Logic ------------------------
+    private int maxCounts = 0;
+    private int individualMaxCounts = 0;
     private Transform holder;
+
     public class HeatObject
     {
         public int eventCounts = 0;
@@ -125,19 +132,39 @@ public class VisualizationManager : MonoBehaviour
         }
     }
 
+    
     private void AddHeatValues()
     {
-        // Firstly we get the max count of events of type X
-        List<Eventinfo> eventList = GetListByUser();
+        // 2 rounds:
+        // The first one to actually have the relative 100% to calculate color and height 
+        // The second one to actually apply values relative to that 100%
+        // Firstly we get the max count of events of type X and the actual max Count of an individual tile
+
+        // Get the max values (eventwise and individualwise) - so we can get a percentage respect them 
+        List<Eventinfo> eventList = EventManager.events;
         for (int i = 0; i < eventList.Count; ++i)
         {
             // Filter the event
             if ((int)eventList[i].type != (int)heatmap_filter)
                 continue;
 
+            // Get the grid object
+            HeatObject gridObject = GetGridObjectByPosition((int)eventList[i].position.x, (int)eventList[i].position.z);
+            if (gridObject == null)
+                continue;
+
+            // Increase the total counts of the event read
             maxCounts++;
+            
+            // Increase the grid object's "counts" (times its been pushed)
+            gridObject.eventCounts++;
+
+            // Overwrite the max counts if its a bigger value than what we got so far 
+            if (gridObject.eventCounts >= individualMaxCounts)
+                individualMaxCounts = gridObject.eventCounts;
         }
         Debug.Log("There are a total of " + maxCounts + " events in the category: " + heatmap_filter);
+        Debug.Log("The most pushed has " + individualMaxCounts + " events pushed. That will be our 100%");
 
         // Then we proceed to actually add those values
         for (int i = 0; i < eventList.Count; ++i)
@@ -146,24 +173,19 @@ public class VisualizationManager : MonoBehaviour
             if ((int)eventList[i].type != (int)heatmap_filter)
                 continue;
 
-            // Get the position
-            Vector3 position = eventList[i].position;
+            // Get the object in the grid
+            HeatObject gridObject = GetGridObjectByPosition((int)eventList[i].position.x, (int)eventList[i].position.z);
+            if (gridObject == null)
+                continue;
 
-            // Get the tile depending on posX and posY
-            Debug.Log("Pushing value to: " + (int)position.x + "," + (int)position.y);
-            int correctedX = (int)position.x - (int)offset.x;
-            int correctedZ = (int)position.z - (int)offset.z;
-            Debug.Log("Recorrected toto: " + correctedX + "," +correctedZ);
-            if (correctedX < width && correctedZ < height && correctedX >= 0 && correctedZ >= 0)
-                AddValue(grid[correctedX, correctedZ]);
-            else
-                Debug.LogError("Pushed position OUT OF RANGE");
+            // Finally push the event
+            AddValue(gridObject);
         }
     }
     private void AddValue(HeatObject heatObject)
     {
         // Add the counter on this heat object
-        ++heatObject.eventCounts;
+        //++heatObject.eventCounts; -> done in the AddHeatValues 
 
         // ======================== Tint the tile correspondently ========================
         Color oldColor = heatObject.tile.GetComponent<Renderer>().material.color;
@@ -174,17 +196,17 @@ public class VisualizationManager : MonoBehaviour
         }
         else // We move from green to red
         {
-            float f = Mathf.Clamp01((float)heatObject.eventCounts/ maxCounts);
+            float f = Mathf.Clamp01((float)heatObject.eventCounts/ individualMaxCounts);
             heatObject.tile.GetComponent<Renderer>().material.color = colorGradient.Evaluate(f) - new Color(0, 0, 0, 1 - alpha);
         }
 
         // =============================== Height pijería =================================
         // We calculate the height it should be 
-        float actualEnlargement = heatObject.eventCounts * maxHeight / maxCounts;
+        float actualEnlargement = Mathf.Lerp(0, maxHeight, (float)heatObject.eventCounts / (float)individualMaxCounts);
         // Enlarge it
-        heatObject.tile.transform.localScale += new Vector3(0f, actualEnlargement, 0f);
+        heatObject.tile.transform.localScale = new Vector3(tileSize, tileSize, tileSize) + new Vector3(0f, actualEnlargement, 0f);
         // We move up the object the half of that enlargement so it stays on the ground
-        heatObject.tile.transform.position += new Vector3(0f, actualEnlargement * 0.5f, 0f);
+        heatObject.tile.transform.position = new Vector3(heatObject.tile.transform.position.x, offset.y, heatObject.tile.transform.position.z) + new Vector3(0f, actualEnlargement * 0.5f, 0f);
     }
 
     // Mouse picking option to get the actual HeatObject
@@ -203,6 +225,22 @@ public class VisualizationManager : MonoBehaviour
             }
         }
     }
+
+    private HeatObject GetGridObjectByPosition(int x, int z)
+    {
+        // Get the tile depending on posX and posY + the offset set to the manager
+        int correctedX = x - (int)offset.x;
+        int correctedZ = z - (int)offset.z;
+
+        // Check the given value its contained in our grid
+        if (!CheckBoundaries(correctedX, correctedZ))
+        {
+            Debug.LogError("Pushed position OUT OF RANGE - original positions: " + x + "," + y);
+            return null;
+        }
+        return grid[correctedX, correctedZ];
+    }
+
     private List<Eventinfo> GetListByUser()
     {
         if (EventManager.eventManager != null)
@@ -220,6 +258,11 @@ public class VisualizationManager : MonoBehaviour
         return null;
     }
   
+    private bool CheckBoundaries(int x, int y)
+    {
+        return (x < width && y < height
+            && x >= 0 && y >= 0);
+    }
     private Transform RecreateHolder()
     {
         // Reset counts
