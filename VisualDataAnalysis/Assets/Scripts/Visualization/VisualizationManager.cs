@@ -89,7 +89,7 @@ public class VisualizationManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateVisualization();
+        //GenerateVisualization();
     }
 
     public void GenerateVisualization()
@@ -153,7 +153,10 @@ public class VisualizationManager : MonoBehaviour
             int correctedX = (int)position.x - (int)offset.x;
             int correctedZ = (int)position.z - (int)offset.z;
             Debug.Log("Recorrected toto: " + correctedX + "," +correctedZ);
-            AddValue(grid[correctedX, correctedZ]);
+            if (correctedX < width && correctedZ < height && correctedX >= 0 && correctedZ >= 0)
+                AddValue(grid[correctedX, correctedZ]);
+            else
+                Debug.LogError("Pushed position OUT OF RANGE");
         }
     }
     private void AddValue(HeatObject heatObject)
