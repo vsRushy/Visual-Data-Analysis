@@ -48,6 +48,7 @@ public class VisualizationManager : MonoBehaviour
     public int width = 10;
     public int height = 10;
     public float tileSize = 0.9f;
+    public float maxHeight = 20f;
     public GameObject tileObj;
     public Gradient colorGradient;
     [Range(0, 1)]
@@ -164,7 +165,7 @@ public class VisualizationManager : MonoBehaviour
         // Add the counter on this heat object
         ++heatObject.eventCounts;
 
-        // Tint the tile correspondently
+        // ======================== Tint the tile correspondently ========================
         Color oldColor = heatObject.tile.GetComponent<Renderer>().material.color;
         // If no value hasnt entered yet, we paint it green, so we can later on interpolate between green and red
         if (oldColor == Color.white)         
@@ -176,6 +177,14 @@ public class VisualizationManager : MonoBehaviour
             float f = Mathf.Clamp01((float)heatObject.eventCounts/ maxCounts);
             heatObject.tile.GetComponent<Renderer>().material.color = colorGradient.Evaluate(f) - new Color(0, 0, 0, 1 - alpha);
         }
+
+        // =============================== Height pijería =================================
+        // We calculate the height it should be 
+        float actualEnlargement = heatObject.eventCounts * maxHeight / maxCounts;
+        // Enlarge it
+        heatObject.tile.transform.localScale += new Vector3(0f, actualEnlargement, 0f);
+        // We move up the object the half of that enlargement so it stays on the ground
+        heatObject.tile.transform.position += new Vector3(0f, actualEnlargement * 0.5f, 0f);
     }
 
     // Mouse picking option to get the actual HeatObject
