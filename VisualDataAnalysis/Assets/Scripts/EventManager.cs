@@ -80,6 +80,16 @@ public class EventManager : MonoBehaviour
         events.Enqueue(e);
     }
 
+    public void AddEventByType(string type)
+    {
+        AddEventByType(GetEventTypeFromString(type));
+    }
+
+    CUSTOM_EVENT_TYPE GetEventTypeFromString(string type)
+    {
+        return (CUSTOM_EVENT_TYPE)Enum.Parse(typeof(CUSTOM_EVENT_TYPE), type);
+    }
+
     public List<Eventinfo> GetListByUser(VisualizationManager.User user_filter)
     {
         List<Eventinfo> ret = new List<Eventinfo>();
@@ -128,10 +138,28 @@ public class EventManager : MonoBehaviour
         return ret;
     }
 
+    // TODO: Visualization, do stuff with this to generate cubes and other magical visual data
+
     void DispatchEvent(Eventinfo e)
     {
         switch (e.type)
         {
+            case CUSTOM_EVENT_TYPE.NONE:
+                break;
+            case CUSTOM_EVENT_TYPE.POSITION:
+                break;
+            case CUSTOM_EVENT_TYPE.ATTACK:
+                break;
+            case CUSTOM_EVENT_TYPE.JUMP:
+                break;
+            case CUSTOM_EVENT_TYPE.DEATH:
+                break;
+            case CUSTOM_EVENT_TYPE.RECEIVE_DAMAGE:
+                break;
+            case CUSTOM_EVENT_TYPE.ENEMY_KILLED:
+                break;
+            case CUSTOM_EVENT_TYPE.ACTIVATE_SWITCH:
+                break;
             default:
                 break;
         }

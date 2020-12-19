@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections;
 using Gamekit3D;
@@ -23,6 +24,10 @@ public class PlayerInput : MonoBehaviour
     protected bool m_Pause;
     protected bool m_ExternalInputBlocked;
 
+
+    // Added: event for jump, so that we call analytics from the inspector instead of the code
+    public UnityEvent OnJump;
+
     public Vector2 MoveInput
     {
         get
@@ -43,9 +48,17 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // Our game programmers modified this function so that analystics could be warned from the inspector!
     public bool JumpInput
     {
-        get { return m_Jump && !playerControllerInputBlocked && !m_ExternalInputBlocked; }
+        get {
+            bool ret;
+            ret = (m_Jump && !playerControllerInputBlocked && !m_ExternalInputBlocked);
+            if (ret)
+                OnJump.Invoke();
+            return ret;
+        
+        }
     }
 
     public bool Attack
