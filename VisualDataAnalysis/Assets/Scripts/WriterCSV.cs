@@ -28,7 +28,7 @@ public class WriterCSV : MonoBehaviour
     }
     
 
-    void WriterData(Queue<Eventinfo> data)
+    void WriterData(List<Eventinfo> data)
     {
         
         //Creating Path

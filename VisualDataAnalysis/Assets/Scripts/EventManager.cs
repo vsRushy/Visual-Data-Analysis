@@ -22,8 +22,11 @@ public class EventManager : MonoBehaviour
     public GameObject player;
 
 
-    // event queue
-    public static Queue<Eventinfo> events = new Queue<Eventinfo>();
+    // events --> those that have been dispatched 
+    public static List<Eventinfo> events = new List<Eventinfo>();
+
+    // events --> those that have not been dispatched 
+    public static List<Eventinfo> pendingEvents = new List<Eventinfo>();
 
     // what this
     public static List<Eventinfo> carlosEvents = new List<Eventinfo>();
@@ -47,7 +50,7 @@ public class EventManager : MonoBehaviour
             eventManager = this;
         }
 
-        events = new Queue<Eventinfo>();
+        events = new List<Eventinfo>();
     }
 
     // Update is called once per frame
@@ -62,22 +65,25 @@ public class EventManager : MonoBehaviour
             AddEventByType(CUSTOM_EVENT_TYPE.POSITION);
         }
 
-        if (events.Count == 0)
+        if (pendingEvents.Count == 0)
             return;
 
-        // dispatch enqueued events
-        foreach (var e in events)
-        {
+        // dispatch enqueued events that have not been dispatched already
+        foreach (var e in pendingEvents)
             DispatchEvent(e);
 
-        }
-        events.Dequeue();
+        // add the dispatched events to the closed list
+        events.AddRange(pendingEvents);
+
+        // clear pending events
+        pendingEvents.Clear();
+        
     }
 
     public void AddEventByType(CUSTOM_EVENT_TYPE type)
     {
         Eventinfo e = new Eventinfo(playerName, playerId, type, player.transform.position, stage);
-        events.Enqueue(e);
+        pendingEvents.Add(e);
     }
 
     public void AddEventByType(string type)
