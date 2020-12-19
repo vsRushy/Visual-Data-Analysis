@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
+
 public class ReaderCSV : MonoBehaviour
 {
     public string playerName;
@@ -19,7 +21,7 @@ public class ReaderCSV : MonoBehaviour
             //Debug info
             foreach(Eventinfo row in EventManager.carlosEvents)
             {
-                Debug.Log(row.name + "," + row.type + "," + row.timestamp);
+                Debug.Log(row.player_name + "," + row.type + "," + row.time);
             }
            
 
@@ -35,7 +37,7 @@ public class ReaderCSV : MonoBehaviour
             //Debug info
             foreach (Eventinfo row in EventManager.sebiEvents)
             {
-                Debug.Log(row.name + "," + row.type + "," + row.timestamp);
+                Debug.Log(row.player_name + "," + row.type.ToString() + "," + row.time);
             }
         }
         else if (playerName.Equals("Marc"))
@@ -49,7 +51,7 @@ public class ReaderCSV : MonoBehaviour
             //Debug info
             foreach (Eventinfo row in EventManager.marcEvents)
             {
-                Debug.Log(row.name + "," + row.type + "," + row.timestamp);
+                Debug.Log(row.player_name + "," + row.type.ToString() + "," + row.time);
             }
         }
     }
@@ -69,11 +71,10 @@ public class ReaderCSV : MonoBehaviour
 
         for (int row = 0; row < nrows; ++row)
         {
-            //Create 
-            Eventinfo n_event = new Eventinfo(data[row][0], data[row][1], System.DateTime.Parse(data[row][2]),
-                new Vector3(float.Parse(data[row][3]), float.Parse(data[row][4]), float.Parse(data[row][5])),
-                uint.Parse(data[row][6]));
-
+            //Create (NOTE: Usage of another constructor of Eventinfo)
+            Eventinfo n_event = new Eventinfo(data[row][0], uint.Parse(data[row][1]), (CUSTOM_EVENT_TYPE)Enum.Parse(typeof(CUSTOM_EVENT_TYPE), data[row][2]),
+                new Vector3(float.Parse(data[row][4]), float.Parse(data[row][5]), float.Parse(data[row][6])),
+                uint.Parse(data[row][7]));
 
             //Add row info
             selectedList.Add(n_event);

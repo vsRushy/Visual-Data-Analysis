@@ -8,6 +8,9 @@ public class EventManager : MonoBehaviour
     // name of the person playing the game
     public string playerName = "Unnamed";
 
+    // player id
+    uint playerId = 0;
+
     // to keep track of the stage
     uint stage = 0;
 
@@ -39,8 +42,6 @@ public class EventManager : MonoBehaviour
         {
             eventManager = this;
         }
-
-
     }
 
     // Update is called once per frame
@@ -52,7 +53,7 @@ public class EventManager : MonoBehaviour
             currentEventIntervalSecTime = 0.0f;
 
             // add new position event
-            events.Enqueue(new Eventinfo(playerName, "Position", System.DateTime.Now, player.transform.position, stage));
+            AddEventByType(CUSTOM_EVENT_TYPE.POSITION);
         }
 
         if (events.Count == 0)
@@ -67,9 +68,9 @@ public class EventManager : MonoBehaviour
         events.Dequeue();
     }
 
-    public void AddEventByType(string type)
+    public void AddEventByType(CUSTOM_EVENT_TYPE type)
     {
-        Eventinfo e = new Eventinfo(playerName, type, System.DateTime.Now, player.transform.position, stage);
+        Eventinfo e = new Eventinfo(playerName, playerId, type, player.transform.position, stage);
         events.Enqueue(e);
     }
 
@@ -129,32 +130,55 @@ public class EventManager : MonoBehaviour
                 break;
         }
     }
+}
 
-
-
+public enum CUSTOM_EVENT_TYPE
+{
+    NONE = -1,
+    POSITION,
+    ATTACK,
+    JUMP,
+    DEATH,
+    RECEIVE_DAMAGE,
+    ENEMY_KILLED,
+    ACTIVATE_SWITCH
 }
 
 public struct Eventinfo
 {
-    public string name;
-    public string type;
-    public DateTime timestamp;
-    public Vector3 position;
+    // Seconds since the application is running.
+    float seconds;
+    // Timespan from seconds.
+    TimeSpan time_span;
+    // String storing the time in date format.
+    public String time;
+
+    // Type of event.
+    public CUSTOM_EVENT_TYPE type;
+
+    // Player name.
+    public String player_name;
+
+    // Player id.
+    public uint player_id;
+
+    // Stage.
     public uint stage;
 
+    // Position at which occurs the event.
+    public Vector3 position;
 
-    public Eventinfo(string _name, string _type, DateTime _timestamp, Vector3 _position, uint _stage)
+    // TODO
+    public Eventinfo(String player_name, uint player_id, CUSTOM_EVENT_TYPE type, Vector3 position, uint stage)
     {
-        name = _name;
-        type = _type;
-        timestamp = _timestamp;
-        position = _position;
-        stage = _stage;
+        this.seconds = Time.realtimeSinceStartup;
+        this.time_span = TimeSpan.FromSeconds(seconds);
+        this.time = String.Format("{0:D2}:{1:D2}:{2:D2}", time_span.Hours, time_span.Minutes, time_span.Seconds);
+
+        this.player_name = player_name;
+        this.player_id = player_id;
+        this.type = type;
+        this.position = position;
+        this.stage = stage;
     }
-
-
-    //public string[] SerializeBody() {  }
-    //public string[] SerializeHeader() { };
-
-
 }

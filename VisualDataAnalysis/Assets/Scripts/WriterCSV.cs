@@ -12,9 +12,9 @@ public class WriterCSV : MonoBehaviour
     {
         
         //EventManager.eventManager.events = new List<Eventinfo>();
-        //EventManager.eventManager.events.Add(new Eventinfo("Sebi", "Position", System.DateTime.Now, new Vector3(2, 1, 2), 1));
-        //EventManager.eventManager.events.Add(new Eventinfo("Carlos", "Death", System.DateTime.Now, new Vector3(2, 1, 2), 2));
-        //EventManager.eventManager.events.Add(new Eventinfo("Doctor", "Damage", System.DateTime.Now, new Vector3(2, 1, 2), 3));
+        //EventManager.eventManager.events.Add(new Eventinfo("Sebi", 0, "Position", new Vector3(2, 1, 2), 1));
+        //EventManager.eventManager.events.Add(new Eventinfo("Carlos", 1, "Death", new Vector3(2, 1, 2), 2));
+        //EventManager.eventManager.events.Add(new Eventinfo("Doctor", 2, "Damage", new Vector3(2, 1, 2), 3));
 
         //WriterData(EventManager.eventManager.events);
     }
@@ -28,23 +28,25 @@ public class WriterCSV : MonoBehaviour
         string filepath = Application.dataPath + "/CSV/" + "SpatialEvents.csv";
         
         // Creating First row of titles manually..
-        string[] rowDataTemp = new string[7];
+        string[] rowDataTemp = new string[8];
         rowDataTemp[0] = "PlayerName";
-        rowDataTemp[1] = "Event";
-        rowDataTemp[2] = "Timestamp";
-        rowDataTemp[3] = "Position_X";
-        rowDataTemp[4] = "Position_Y";
-        rowDataTemp[5] = "Position_Z";
-        rowDataTemp[6] = "Stage";
+        rowDataTemp[1] = "PlayerId";
+        rowDataTemp[2] = "Event";
+        rowDataTemp[3] = "Timestamp";
+        rowDataTemp[4] = "Position_X";
+        rowDataTemp[5] = "Position_Y";
+        rowDataTemp[6] = "Position_Z";
+        rowDataTemp[7] = "Stage";
         rowData.Add(rowDataTemp);
 
         // You can add up the values in as many cells as you want.
         foreach(Eventinfo row in data)
         {
             rowDataTemp = new string[7];
-            rowDataTemp[0] = row.name;
-            rowDataTemp[1] = row.type;
-            rowDataTemp[2] = row.timestamp.ToString();
+            rowDataTemp[0] = row.player_name;
+            rowDataTemp[1] = row.player_id.ToString();
+            rowDataTemp[1] = row.type.ToString();
+            rowDataTemp[2] = row.time;
             rowDataTemp[3] = row.position.x.ToString();
             rowDataTemp[4] = row.position.y.ToString();
             rowDataTemp[5] = row.position.z.ToString();

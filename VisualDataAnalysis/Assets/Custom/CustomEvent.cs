@@ -3,17 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum CUSTOM_EVENT_TYPE
-{
-    NONE = -1,
-    POSITION,
-    ATTACK,
-    JUMP,
-    DEATH,
-    RECEIVE_DAMAGE,
-    ENEMY_KILLED,
-    ACTIVATE_SWITCH
-}
+/*
 
 public class CustomEvent : MonoBehaviour
 {
@@ -48,3 +38,4 @@ public class CustomEvent : MonoBehaviour
     }
 
 }
+*/
