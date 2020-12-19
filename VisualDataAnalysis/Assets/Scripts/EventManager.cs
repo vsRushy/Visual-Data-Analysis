@@ -42,6 +42,8 @@ public class EventManager : MonoBehaviour
         {
             eventManager = this;
         }
+
+        events = new Queue<Eventinfo>();
     }
 
     // Update is called once per frame

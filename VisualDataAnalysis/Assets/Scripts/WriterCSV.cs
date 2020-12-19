@@ -11,14 +11,21 @@ public class WriterCSV : MonoBehaviour
     void Start()
     {
         
-        EventManager.eventManager.events = new Queue<Eventinfo>();
-        EventManager.eventManager.events.Enqueue(new Eventinfo("Sebi", 0, CUSTOM_EVENT_TYPE.POSITION, new Vector3(2, 1, 2), 1));
+        //EventManager.eventManager.events.Enqueue(new Eventinfo("Sebi", 0, CUSTOM_EVENT_TYPE.POSITION, new Vector3(2, 1, 2), 1));
         //EventManager.eventManager.events.Add(new Eventinfo("Carlos", 1, "Death", new Vector3(2, 1, 2), 2));
         //EventManager.eventManager.events.Add(new Eventinfo("Doctor", 2, "Damage", new Vector3(2, 1, 2), 3));
 
-        WriterData(EventManager.eventManager.events);
+        //WriterData(EventManager.eventManager.events);
     }
 
+    // For testing purposes
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            WriterData(EventManager.eventManager.events);
+        }
+    }
     
 
     void WriterData(Queue<Eventinfo> data)
@@ -42,29 +49,30 @@ public class WriterCSV : MonoBehaviour
         // You can add up the values in as many cells as you want.
         foreach(Eventinfo row in data)
         {
-            rowDataTemp = new string[7];
+            rowDataTemp = new string[8];
             rowDataTemp[0] = row.player_name;
             rowDataTemp[1] = row.player_id.ToString();
-            rowDataTemp[1] = row.type.ToString();
-            rowDataTemp[2] = row.time;
-            rowDataTemp[3] = row.position.x.ToString();
-            rowDataTemp[4] = row.position.y.ToString();
-            rowDataTemp[5] = row.position.z.ToString();
-            rowDataTemp[6] = row.stage.ToString();
+            rowDataTemp[2] = row.type.ToString();
+            rowDataTemp[3] = row.time;
+            rowDataTemp[4] = row.position.x.ToString();
+            rowDataTemp[5] = row.position.y.ToString();
+            rowDataTemp[6] = row.position.z.ToString();
+            rowDataTemp[7] = row.stage.ToString();
             rowData.Add(rowDataTemp);
         }
-        //for (int i = 0; i < 10; i++)
-        //{
-        //    rowDataTemp = new string[7];
-        //    rowDataTemp[0] = "Carlos"; 
-        //    rowDataTemp[1] = "Position";
-        //    rowDataTemp[2] = System.DateTime.Now.ToString();
-        //    rowDataTemp[3] = UnityEngine.Random.Range(-10, 10).ToString();
-        //    rowDataTemp[4] = UnityEngine.Random.Range(-10, 10).ToString();
-        //    rowDataTemp[5] = UnityEngine.Random.Range(-10, 10).ToString();
-        //    rowDataTemp[6] = "2";
-        //    rowData.Add(rowDataTemp);
-        //}
+        for (int i = 0; i < 10; i++)
+        {
+            rowDataTemp = new string[8];
+            rowDataTemp[0] = "Carlos";
+            rowDataTemp[1] = 1.ToString();
+            rowDataTemp[2] = CUSTOM_EVENT_TYPE.POSITION.ToString();
+            rowDataTemp[3] = System.DateTime.Now.ToString();
+            rowDataTemp[4] = UnityEngine.Random.Range(-10, 10).ToString();
+            rowDataTemp[5] = UnityEngine.Random.Range(-10, 10).ToString();
+            rowDataTemp[6] = UnityEngine.Random.Range(-10, 10).ToString();
+            rowDataTemp[7] = "2";
+            rowData.Add(rowDataTemp);
+        }
 
         string[][] output = new string[rowData.Count][];
 
