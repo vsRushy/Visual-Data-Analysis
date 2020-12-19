@@ -40,13 +40,19 @@ public class EventManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        if (eventManager == null)
+        if (eventManager != null && eventManager != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
         {
             eventManager = this;
         }
-
+    }
+    void Start()
+    {
         events = new Queue<Eventinfo>();
     }
 
