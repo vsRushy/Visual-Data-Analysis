@@ -5,9 +5,23 @@ using System;
 
 public class EventManager : MonoBehaviour
 {
+    // name of the person playing the game
+    public string playerName = "Unnamed";
+
+    // to keep track of the stage
+    uint stage = 0;
+
+    // polling rate so as not to crate events every frame
+    public float eventIntervalSecTime = 0.5f;
+    float currentEventIntervalSecTime = 0.0f;
+
+    // reference to the player gameObject
+    public GameObject player;
+
+
     public static EventManager eventManager;
 
-    public List<Eventinfo> events;
+    public Queue<Eventinfo> events;
 
     public static List<Eventinfo> carlosEvents = new List<Eventinfo>();
     public static List<Eventinfo> sebiEvents = new List<Eventinfo>();
@@ -21,18 +35,42 @@ public class EventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(eventManager == null)
+        if (eventManager == null)
         {
             eventManager = this;
         }
 
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Only used for position right now since its the only "contiunous" event
+        if ((currentEventIntervalSecTime += Time.deltaTime) >= eventIntervalSecTime)
+        {
+            currentEventIntervalSecTime = 0.0f;
+
+            // add new position event
+            events.Enqueue(new Eventinfo(playerName, "Position", System.DateTime.Now, player.transform.position, stage));
+        }
+
+        if (events.Count == 0)
+            return;
+
+        // dispatch enqueued events
+        foreach (var e in events)
+        {
+            DispatchEvent(e);
+
+        }
+        events.Dequeue();
+    }
+
+    public void AddEventByType(string type)
+    {
+        Eventinfo e = new Eventinfo(playerName, type, System.DateTime.Now, player.transform.position, stage);
+        events.Enqueue(e);
     }
 
     public List<Eventinfo> GetListByUser(VisualizationManager.User user_filter)
@@ -82,6 +120,18 @@ public class EventManager : MonoBehaviour
 
         return ret;
     }
+
+    void DispatchEvent(Eventinfo e)
+    {
+        switch (e.type)
+        {
+            default:
+                break;
+        }
+    }
+
+
+
 }
 
 public struct Eventinfo
