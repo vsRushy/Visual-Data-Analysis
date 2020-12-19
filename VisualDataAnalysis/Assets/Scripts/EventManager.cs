@@ -35,12 +35,12 @@ public class EventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(eventManager == null)
+        if (eventManager == null)
         {
             eventManager = this;
         }
 
-       
+
     }
 
     // Update is called once per frame
@@ -59,11 +59,12 @@ public class EventManager : MonoBehaviour
             return;
 
         // dispatch enqueued events
-        foreach(var e in events)
+        foreach (var e in events)
         {
             DispatchEvent(e);
-        }
 
+        }
+        events.Dequeue();
     }
 
     public void AddEventByType(string type)
