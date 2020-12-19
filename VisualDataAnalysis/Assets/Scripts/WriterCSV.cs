@@ -10,7 +10,6 @@ public class WriterCSV : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         //EventManager.eventManager.events = new List<Eventinfo>();
         //EventManager.eventManager.events.Add(new Eventinfo("Sebi", "Position", System.DateTime.Now, new Vector3(2, 1, 2), 1));
         //EventManager.eventManager.events.Add(new Eventinfo("Carlos", "Death", System.DateTime.Now, new Vector3(2, 1, 2), 2));

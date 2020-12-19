@@ -19,13 +19,17 @@ public class EventManager : MonoBehaviour
     public GameObject player;
 
 
-    public static EventManager eventManager;
+    // event queue
+    public static Queue<Eventinfo> events = new Queue<Eventinfo>();
 
-    public Queue<Eventinfo> events;
-
+    // what this
     public static List<Eventinfo> carlosEvents = new List<Eventinfo>();
     public static List<Eventinfo> sebiEvents = new List<Eventinfo>();
     public static List<Eventinfo> marcEvents = new List<Eventinfo>();
+
+    // singleton
+
+    public static EventManager eventManager;
 
     public static EventManager GetInstance()
     {

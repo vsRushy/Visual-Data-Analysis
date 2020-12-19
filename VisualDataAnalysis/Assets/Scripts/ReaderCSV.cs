@@ -70,7 +70,7 @@ public class ReaderCSV : MonoBehaviour
         for (int row = 0; row < nrows; ++row)
         {
             //Create 
-            Eventinfo n_event = new Eventinfo(data[row][0], data[row][1], System.DateTime.Parse(data[row][2]),
+            Eventinfo n_event = new Eventinfo(data[row][0], data[row][1], float.Parse(data[row][2]),
                 new Vector3(float.Parse(data[row][3]), float.Parse(data[row][4]), float.Parse(data[row][5])),
                 uint.Parse(data[row][6]));
 
