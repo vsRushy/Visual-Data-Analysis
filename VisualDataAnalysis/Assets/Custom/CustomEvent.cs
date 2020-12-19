@@ -27,65 +27,23 @@ public class CustomEvent : MonoBehaviour
     // Type of event.
     CUSTOM_EVENT_TYPE type;
 
-    // Player id
+    // Player id.
     Int64 player_id;
 
-    // Stage
+    // Stage.
     int stage;
 
+    // Position at which occurs the event.
+    Vector3 position;
+
     // TODO
-    public CustomEvent()
+    public CustomEvent(Int64 player_id, CUSTOM_EVENT_TYPE type, Vector3 position)
     {
         seconds = Time.realtimeSinceStartup;
         time = String.Format("{0:D2}:{1:D2}:{2:D2}", time_span.Hours, time_span.Minutes, time_span.Seconds);
-        
-        type = CUSTOM_EVENT_TYPE.NONE;
+
+        this.player_id = player_id;
+        this.type = type;
+        this.position = position;
     }
-}
-
-public class CustomEventPosition : CustomEvent
-{
-
-}
-
-public class CustomEventAttack : CustomEvent
-{
-
-}
-
-public class CustomEventJump : CustomEvent
-{
-
-}
-
-public class CustomEventDeath : CustomEvent
-{
-
-}
-
-public class CustomEventReceiveDamage : CustomEvent
-{
-
-}
-
-public class CustomEventEnemyKilled : CustomEvent
-{
-
-}
-
-public class CustomEventActivateSwitch : CustomEvent
-{
-
-}
-
-// Might be irrelevant, as position will be very similar.
-public class CustomEventWinGame : CustomEvent
-{
-
-}
-
-// Might be irrelevant, as position will be very similar.
-public class CustomEventEnterGame : CustomEvent
-{
-
 }
