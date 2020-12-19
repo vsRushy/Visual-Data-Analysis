@@ -235,7 +235,7 @@ public class VisualizationManager : MonoBehaviour
         // Check the given value its contained in our grid
         if (!CheckBoundaries(correctedX, correctedZ))
         {
-            Debug.LogError("Pushed position OUT OF RANGE - original positions: " + x + "," + y);
+            Debug.LogError("Pushed position OUT OF RANGE - original positions: " + x + "," + z);
             return null;
         }
         return grid[correctedX, correctedZ];
