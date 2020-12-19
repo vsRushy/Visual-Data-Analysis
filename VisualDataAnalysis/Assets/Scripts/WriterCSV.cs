@@ -11,12 +11,12 @@ public class WriterCSV : MonoBehaviour
     void Start()
     {
         
-        EventManager.eventManager.events = new List<Eventinfo>();
-        EventManager.eventManager.events.Add(new Eventinfo("Sebi", "Position", System.DateTime.Now, new Vector3(2, 1, 2), 1));
-        EventManager.eventManager.events.Add(new Eventinfo("Carlos", "Death", System.DateTime.Now, new Vector3(2, 1, 2), 2));
-        EventManager.eventManager.events.Add(new Eventinfo("Doctor", "Damage", System.DateTime.Now, new Vector3(2, 1, 2), 3));
+        //EventManager.eventManager.events = new List<Eventinfo>();
+        //EventManager.eventManager.events.Add(new Eventinfo("Sebi", "Position", System.DateTime.Now, new Vector3(2, 1, 2), 1));
+        //EventManager.eventManager.events.Add(new Eventinfo("Carlos", "Death", System.DateTime.Now, new Vector3(2, 1, 2), 2));
+        //EventManager.eventManager.events.Add(new Eventinfo("Doctor", "Damage", System.DateTime.Now, new Vector3(2, 1, 2), 3));
 
-        WriterData(EventManager.eventManager.events);
+        //WriterData(EventManager.eventManager.events);
     }
 
     

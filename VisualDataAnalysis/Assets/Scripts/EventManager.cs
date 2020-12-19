@@ -9,6 +9,10 @@ public class EventManager : MonoBehaviour
 
     public List<Eventinfo> events;
 
+    public static List<Eventinfo> carlosEvents = new List<Eventinfo>();
+    public static List<Eventinfo> sebiEvents = new List<Eventinfo>();
+    public static List<Eventinfo> marcEvents = new List<Eventinfo>();
+
     public static EventManager GetInstance()
     {
         return eventManager;
@@ -21,6 +25,8 @@ public class EventManager : MonoBehaviour
         {
             eventManager = this;
         }
+
+       
     }
 
     // Update is called once per frame
