@@ -21,7 +21,7 @@ public class ReaderCSV : MonoBehaviour
             //Debug info
             foreach(Eventinfo row in EventManager.carlosEvents)
             {
-                Debug.Log(row.player_name + "," + row.type + "," + row.time);
+                //Debug.Log(row.player_name + "," + row.type + "," + row.time);
             }
            
 
