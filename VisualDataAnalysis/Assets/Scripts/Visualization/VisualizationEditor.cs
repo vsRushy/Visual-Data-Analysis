@@ -14,9 +14,13 @@ public class VisualizationEditor : Editor
             //visualization.GenerateVisualization();
         }
 
-        if (GUILayout.Button("Generate Map"))
+        if (GUILayout.Button("Generate HeatMap"))
         {
             visualization.GenerateVisualization();
+        }
+        if (GUILayout.Button("Destroy HeatMap"))
+        {
+            visualization.DestroyHeatMap();
         }
     }
 }

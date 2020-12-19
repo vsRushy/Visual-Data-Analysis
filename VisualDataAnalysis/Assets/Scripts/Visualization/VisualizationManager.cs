@@ -268,6 +268,12 @@ public class VisualizationManager : MonoBehaviour
         // We move up the object the half of that enlargement so it stays on the ground
         heatObject.tile.transform.position = new Vector3(heatObject.tile.transform.position.x, offset.y, heatObject.tile.transform.position.z) + new Vector3(0f, actualEnlargement * 0.5f, 0f);
     }
+
+    public void DestroyHeatMap()
+    {
+        RecreateHolder();
+    }
+
     private Transform RecreateHolder()
     {
         // Reset counts
