@@ -23,7 +23,7 @@ public class WriterCSV : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            WriterData(EventManager.eventManager.events);
+            WriterData(EventManager.events);
         }
     }
     
