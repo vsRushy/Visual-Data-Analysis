@@ -52,7 +52,7 @@ public class EventManager : MonoBehaviour
             currentEventIntervalSecTime = 0.0f;
 
             // add new position event
-            events.Enqueue(new Eventinfo(playerName, "Position", System.DateTime.Now, player.transform.position, stage));
+            events.Enqueue(new Eventinfo(playerName, "Position", Time.time, player.transform.position, stage));
         }
 
         if (events.Count == 0)
@@ -69,7 +69,7 @@ public class EventManager : MonoBehaviour
 
     public void AddEventByType(string type)
     {
-        Eventinfo e = new Eventinfo(playerName, type, System.DateTime.Now, player.transform.position, stage);
+        Eventinfo e = new Eventinfo(playerName, type, Time.time, player.transform.position, stage);
         events.Enqueue(e);
     }
 
@@ -138,12 +138,12 @@ public struct Eventinfo
 {
     public string name;
     public string type;
-    public DateTime timestamp;
+    public float timestamp;
     public Vector3 position;
     public uint stage;
 
 
-    public Eventinfo(string _name, string _type, DateTime _timestamp, Vector3 _position, uint _stage)
+    public Eventinfo(string _name, string _type, float _timestamp, Vector3 _position, uint _stage)
     {
         name = _name;
         type = _type;
