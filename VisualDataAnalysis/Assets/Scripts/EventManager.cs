@@ -34,6 +34,54 @@ public class EventManager : MonoBehaviour
     {
         
     }
+
+    public List<Eventinfo> GetListByUser(VisualizationManager.User user_filter)
+    {
+        List<Eventinfo> ret = new List<Eventinfo>();
+        switch (user_filter)
+        {
+            case VisualizationManager.User.All:
+                {
+                    ret.AddRange(carlosEvents);
+                    ret.AddRange(sebiEvents);
+                    ret.AddRange(marcEvents);
+                    //ret.AddRange(peterEvents);
+                    //ret.AddRange(gerardEvents);
+                }
+                break;
+            case VisualizationManager.User.Carlos:
+                {
+                    ret = carlosEvents;
+                }
+                break;
+            case VisualizationManager.User.Gerard:
+                {
+                    //ret = gerardEvents;
+                    Debug.Log("User Not ready yet");
+                }
+                break;
+            case VisualizationManager.User.Marc:
+                {
+                    ret = marcEvents;
+                }
+                break;
+            case VisualizationManager.User.Peter:
+                {
+                    //ret = peterEvents;
+                    Debug.Log("User Not ready yet");
+                }
+                break;
+            case VisualizationManager.User.Sebi:
+                {
+                    ret = sebiEvents;
+                }
+                break;
+            default:           
+                break;
+        }
+
+        return ret;
+    }
 }
 
 public struct Eventinfo

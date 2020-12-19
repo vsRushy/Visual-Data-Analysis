@@ -80,19 +80,11 @@ public class VisualizationManager : MonoBehaviour
         // Generate the grid 
         holder = RecreateHolder(); // Deletes the old grid
         GenerateGridObjects();
-
-        List<GameObject> eventList = new List<GameObject>();
-        // Do something like
-        // eventList = Reader.GetListOf(user_filter);
-        if (eventList.Count == 0)
-        {
-            Debug.Log("There are no items in the list");
-            return;
-        }
-
+        List<Eventinfo> eventList = GetListByUser();
 
         for(int i = 0; i < eventList.Count; ++i)
         {
+            Debug.Log("Item " + i);
             //  Filter if type = heatmap_filter
             // Get the tile depending on posX and posY
             // Add value (eventually color) to that tile obj
@@ -110,10 +102,27 @@ public class VisualizationManager : MonoBehaviour
                 newObj.transform.localScale = new Vector3(tileSize, 0.2f, tileSize);
                 //  Set each object to the correspondent grid
                 //  Create a new material for each object ?? 
+                // grid[?,?] = newObj ?; 
             }
         }
     }
 
+    private List<Eventinfo> GetListByUser()
+    {
+        if (EventManager.eventManager != null)
+        {
+            // Gets the list from the reader / event manager
+            List<Eventinfo> retList = EventManager.eventManager.GetListByUser(user_filter);
+
+            // Just to notify if the list is empty
+            if(retList.Count == 0)
+                Debug.Log("There are no items in the list");
+
+            return retList;
+        }
+        Debug.LogError("Event Manager doesn't exist!");
+        return null;
+    }
     private bool CheckBoundaries(Vector2 pos)
     {
         return (pos.x >= 0 && pos.x <= width &&
