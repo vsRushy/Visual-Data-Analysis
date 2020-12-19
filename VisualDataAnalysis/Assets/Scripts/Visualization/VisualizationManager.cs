@@ -52,7 +52,8 @@ public class VisualizationManager : MonoBehaviour
     public int width = 10;
     public int height = 10;
     public float tileSize = 0.9f;
-    public float maxHeight = 20f;
+    public bool useHeight = false;
+    public float maxHeight = 5f;
     public Gradient colorGradient;
     public GameObject tileObj;
     [Range(0, 1)]
@@ -138,10 +139,11 @@ public class VisualizationManager : MonoBehaviour
         // 2 rounds:
         // The first one to actually have the relative 100% to calculate color and height 
         // The second one to actually apply values relative to that 100%
-        // Firstly we get the max count of events of type X and the actual max Count of an individual tile
-
-        // Get the max values (eventwise and individualwise) - so we can get a percentage respect them 
+       
+        //List<Eventinfo> eventList = GetListByUser(user_filter);    // TODO: Uncomment when reader works
         List<Eventinfo> eventList = EventManager.events;
+
+        // Firstly we get the max count of events of type X and the actual max Count of an individual tile
         for (int i = 0; i < eventList.Count; ++i)
         {
             // Filter the event
@@ -178,35 +180,19 @@ public class VisualizationManager : MonoBehaviour
             if (gridObject == null)
                 continue;
 
-            // Finally push the event
+            // Finally push the event 
             AddValue(gridObject);
         }
     }
-    private void AddValue(HeatObject heatObject)
+    private void AddValue(HeatObject heatObject, bool fromOutside = false)
     {
-        // Add the counter on this heat object
-        //++heatObject.eventCounts; -> done in the AddHeatValues 
+        if (fromOutside)                // Corrupts the color/size relationship - This is for the mouse picking option
+            ++heatObject.eventCounts;   // -> done in the AddHeatValues 
 
-        // ======================== Tint the tile correspondently ========================
-        Color oldColor = heatObject.tile.GetComponent<Renderer>().material.color;
-        // If no value hasnt entered yet, we paint it green, so we can later on interpolate between green and red
-        if (oldColor == Color.white)         
-        {
-            heatObject.tile.GetComponent<Renderer>().material.color = colorGradient.Evaluate(0f);
-        }
-        else // We move from green to red
-        {
-            float f = Mathf.Clamp01((float)heatObject.eventCounts/ individualMaxCounts);
-            heatObject.tile.GetComponent<Renderer>().material.color = colorGradient.Evaluate(f) - new Color(0, 0, 0, 1 - alpha);
-        }
+        TintObject(heatObject);
 
-        // =============================== Height pijería =================================
-        // We calculate the height it should be 
-        float actualEnlargement = Mathf.Lerp(0, maxHeight, (float)heatObject.eventCounts / (float)individualMaxCounts);
-        // Enlarge it
-        heatObject.tile.transform.localScale = new Vector3(tileSize, tileSize, tileSize) + new Vector3(0f, actualEnlargement, 0f);
-        // We move up the object the half of that enlargement so it stays on the ground
-        heatObject.tile.transform.position = new Vector3(heatObject.tile.transform.position.x, offset.y, heatObject.tile.transform.position.z) + new Vector3(0f, actualEnlargement * 0.5f, 0f);
+        if (useHeight)
+            EnlargeObject(heatObject);
     }
 
     // Mouse picking option to get the actual HeatObject
@@ -219,7 +205,7 @@ public class VisualizationManager : MonoBehaviour
                 if(grid[x,y].tile == objectHit)
                 {
                     Debug.Log("Found that clicked tile in: " + x + "," + y);
-                    AddValue(grid[x, y]);
+                    AddValue(grid[x, y], true);
                     return;
                 }
             }
@@ -235,7 +221,7 @@ public class VisualizationManager : MonoBehaviour
         // Check the given value its contained in our grid
         if (!CheckBoundaries(correctedX, correctedZ))
         {
-            Debug.LogError("Pushed position OUT OF RANGE - original positions: " + x + "," + z);
+            Debug.LogWarning("Pushed position OUT OF RANGE - original positions: " + x + "," + z);
             return null;
         }
         return grid[correctedX, correctedZ];
@@ -262,6 +248,25 @@ public class VisualizationManager : MonoBehaviour
     {
         return (x < width && y < height
             && x >= 0 && y >= 0);
+    }
+
+    private void TintObject(HeatObject heatObject)
+    {
+        // ======================== Tint the tile correspondently ========================
+        // Evaluate the gradient value depending on its current counts relative to the max counts on an object
+        float f = Mathf.Clamp01((float)heatObject.eventCounts / individualMaxCounts);
+        heatObject.tile.GetComponent<Renderer>().material.color = colorGradient.Evaluate(f) - new Color(0, 0, 0, 1 - alpha);
+    }
+
+    private void EnlargeObject(HeatObject heatObject)
+    {
+        // =============================== Height pijería =================================
+        // We calculate the height it should be 
+        float actualEnlargement = Mathf.Lerp(0, maxHeight, (float)heatObject.eventCounts / (float)individualMaxCounts);
+        // Enlarge it
+        heatObject.tile.transform.localScale = new Vector3(tileSize, tileSize, tileSize) + new Vector3(0f, actualEnlargement, 0f);
+        // We move up the object the half of that enlargement so it stays on the ground
+        heatObject.tile.transform.position = new Vector3(heatObject.tile.transform.position.x, offset.y, heatObject.tile.transform.position.z) + new Vector3(0f, actualEnlargement * 0.5f, 0f);
     }
     private Transform RecreateHolder()
     {
