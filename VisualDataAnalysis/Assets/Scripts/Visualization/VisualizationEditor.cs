@@ -11,7 +11,7 @@ public class VisualizationEditor : Editor
         VisualizationManager visualization = target as VisualizationManager;
         if (DrawDefaultInspector())
         {
-            visualization.GenerateVisualization();
+            //visualization.GenerateVisualization();
         }
 
         if (GUILayout.Button("Generate Map"))

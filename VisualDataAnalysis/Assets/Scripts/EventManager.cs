@@ -76,6 +76,8 @@ public class EventManager : MonoBehaviour
 
     public void AddEventByType(CUSTOM_EVENT_TYPE type)
     {
+        if (player == null)
+            return;
         Eventinfo e = new Eventinfo(playerName, playerId, type, player.transform.position, stage);
         events.Enqueue(e);
     }
