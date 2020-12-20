@@ -9,7 +9,8 @@ public class EventManager : MonoBehaviour
    // public string playerName = "Unnamed";
     
     public VisualizationManager.User userName = VisualizationManager.User.All;
-
+   public static System.Globalization.CultureInfo culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
+    
     // to keep track of the stage
     uint stage = 0;
 
@@ -56,6 +57,10 @@ public class EventManager : MonoBehaviour
         }
 
         events = new List<Eventinfo>();
+
+        culture.NumberFormat.NumberDecimalSeparator = ".";
+        // culture.NumberFormat.NumberGroupSeparator = ",";
+        culture.NumberFormat.NumberDecimalDigits = 6;
     }
 
     private void Start()

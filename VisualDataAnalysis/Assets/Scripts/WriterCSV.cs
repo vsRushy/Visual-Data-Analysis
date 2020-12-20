@@ -52,6 +52,8 @@ public class WriterCSV : MonoBehaviour
 
     public static void WriterData(List<Eventinfo> data)
     {
+       
+
         List<string[]> rowData = new List<string[]>();
         //Creating Path
         string filepath = Application.dataPath + "/CSV/" + "SpatialEvents.csv";
@@ -71,11 +73,17 @@ public class WriterCSV : MonoBehaviour
         {
             rowDataTemp = new string[6];
             rowDataTemp[0] = row.player_name;
-            rowDataTemp[1] = row.type.ToString();
             rowDataTemp[2] = row.time;
-            rowDataTemp[3] = row.position.x.ToString();
-            rowDataTemp[4] = row.position.y.ToString();
-            rowDataTemp[5] = row.position.z.ToString();
+            rowDataTemp[3] = row.position.x.ToString(EventManager.culture);
+            //float pos_x = row.position.x;
+            //float.TryParse(rowDataTemp[3], System.Globalization.NumberStyles.Float, culture, out pos_x);
+            rowDataTemp[4] = row.position.y.ToString(EventManager.culture);
+            //float pos_y = row.position.y;
+            //float.TryParse(rowDataTemp[4], System.Globalization.NumberStyles.Float, culture, out pos_y);
+            rowDataTemp[5] = row.position.z.ToString(EventManager.culture);
+            //float pos_z = row.position.z;
+            //float.TryParse(rowDataTemp[5], System.Globalization.NumberStyles.Float, culture, out pos_z);
+
             rowData.Add(rowDataTemp);
         }
         
