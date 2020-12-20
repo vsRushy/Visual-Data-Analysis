@@ -78,6 +78,7 @@ public class WriterCSV : MonoBehaviour
         {
             rowDataTemp = new string[6];
             rowDataTemp[0] = row.player_name;
+            rowDataTemp[1] = row.type.ToString();
             rowDataTemp[2] = row.time;
             rowDataTemp[3] = row.position.x.ToString(EventManager.culture);
             //float pos_x = row.position.x;
