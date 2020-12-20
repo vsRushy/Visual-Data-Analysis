@@ -6,7 +6,9 @@ using System;
 public class EventManager : MonoBehaviour
 {
     // name of the person playing the game
-    public string playerName = "Unnamed";
+   // public string playerName = "Unnamed";
+    
+    public VisualizationManager.User userName = VisualizationManager.User.All;
 
     // player id
     uint playerId = 0;
@@ -32,6 +34,8 @@ public class EventManager : MonoBehaviour
     public static List<Eventinfo> carlosEvents = new List<Eventinfo>();
     public static List<Eventinfo> sebiEvents = new List<Eventinfo>();
     public static List<Eventinfo> marcEvents = new List<Eventinfo>();
+    public static List<Eventinfo> gerardEvents = new List<Eventinfo>();
+    public static List<Eventinfo> joseEvents = new List<Eventinfo>();
 
     // singleton
 
@@ -55,6 +59,40 @@ public class EventManager : MonoBehaviour
         }
 
         events = new List<Eventinfo>();
+    }
+
+    private void Start()
+    {
+        ReaderCSV.ReadData(VisualizationManager.User.Carlos);
+        ReaderCSV.ReadData(VisualizationManager.User.Sebi);
+        ReaderCSV.ReadData(VisualizationManager.User.Marc);
+        ReaderCSV.ReadData(VisualizationManager.User.Peter);
+        ReaderCSV.ReadData(VisualizationManager.User.Gerard);
+    }
+
+    void OnApplicationQuit()
+    {
+       
+        Debug.Log("Writting data... ");
+
+        switch (userName)
+        {
+            case VisualizationManager.User.Carlos:
+                WriterCSV.WriterData(carlosEvents);
+                break;
+            case VisualizationManager.User.Sebi:
+                WriterCSV.WriterData(sebiEvents);
+                break;
+            case VisualizationManager.User.Marc:
+                WriterCSV.WriterData(marcEvents);
+                break;
+            case VisualizationManager.User.Peter:
+                WriterCSV.WriterData(joseEvents);
+                break;
+            case VisualizationManager.User.Gerard:
+                WriterCSV.WriterData(gerardEvents);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -88,7 +126,7 @@ public class EventManager : MonoBehaviour
     {
         if (player == null)
             return;
-        Eventinfo e = new Eventinfo(playerName, playerId, type, player.transform.position, stage);
+        Eventinfo e = new Eventinfo(userName.ToString(), playerId, type, player.transform.position, stage);
         pendingEvents.Add(e);
     }
 
@@ -97,9 +135,14 @@ public class EventManager : MonoBehaviour
         AddEventByType(GetEventTypeFromString(type));
     }
 
-    CUSTOM_EVENT_TYPE GetEventTypeFromString(string type)
+   public static CUSTOM_EVENT_TYPE GetEventTypeFromString(string type)
     {
         return (CUSTOM_EVENT_TYPE)Enum.Parse(typeof(CUSTOM_EVENT_TYPE), type);
+    }
+
+    public static VisualizationManager.User GetUserTypeFromString(string userName)
+    {
+        return (VisualizationManager.User)Enum.Parse(typeof(VisualizationManager.User), userName);
     }
 
     public List<Eventinfo> GetListByUser(VisualizationManager.User user_filter)
