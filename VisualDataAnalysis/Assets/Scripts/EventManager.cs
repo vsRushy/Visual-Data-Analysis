@@ -171,7 +171,7 @@ public class EventManager : MonoBehaviour
             case CUSTOM_EVENT_TYPE.ENEMY_KILLED:
                 break;
             case CUSTOM_EVENT_TYPE.ACTIVATE_SWITCH:
-                break;
+               break;
             case CUSTOM_EVENT_TYPE.LEVEL_ENTER:
                 break;
             default:
