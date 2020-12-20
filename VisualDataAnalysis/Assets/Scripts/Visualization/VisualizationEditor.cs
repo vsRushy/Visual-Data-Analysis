@@ -14,6 +14,8 @@ public class VisualizationEditor : Editor
             //visualization.GenerateVisualization();
         }
 
+        GUILayout.Space(5);
+        GUILayout.Label(" --- Only on Play mode --- ");
         if (GUILayout.Button("Generate HeatMap"))
         {
             visualization.GenerateVisualization();

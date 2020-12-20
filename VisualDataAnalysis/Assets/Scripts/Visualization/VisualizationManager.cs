@@ -35,6 +35,7 @@ public class VisualizationManager : MonoBehaviour
     // ------------------------ Customization ------------------------
     public int width = 10;
     public int height = 10;
+    [Range(0,1)]
     public float tileSize = 0.9f;
     public bool useHeight = false;
     public float maxHeight = 5f;
