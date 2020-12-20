@@ -6,55 +6,118 @@ using System;
 
 public class ReaderCSV : MonoBehaviour
 {
-    public string playerName;
+    
    
-
     // Start is called before the first frame update
     void Start()
     {
-        if (playerName.Equals("Carlos"))
-        {
+        
+
+        //string[][] data1 = Read(VisualizationManager.User.Carlos);
+        //SerializeRead(data1, EventManager.carlosEvents);
+
+        //string[][] data2 = Read(VisualizationManager.User.Sebi);
+        //SerializeRead(data2, EventManager.sebiEvents);
+
+        //string[][] data3 = Read(VisualizationManager.User.Marc);
+        //SerializeRead(data3, EventManager.marcEvents);
+
+        //string[][] data4 = Read(VisualizationManager.User.Peter);
+        //SerializeRead(data4, EventManager.joseEvents);
+
+        //string[][] data5 = Read(VisualizationManager.User.Gerard);
+        //SerializeRead(data5, EventManager.gerardEvents);
+
+
+        //if (playerName.Equals("Carlos"))
+        //{
            
-            string[][] data = Read(playerName);
-            SerializeRead(data, EventManager.carlosEvents);
+        //    string[][] data = Read(playerName);
+        //    SerializeRead(data, EventManager.carlosEvents);
 
-            //Debug info
-            foreach(Eventinfo row in EventManager.carlosEvents)
-            {
-                //Debug.Log(row.player_name + "," + row.type + "," + row.time);
-            }
-           
-
-        }
-        else if(playerName.Equals("Sebi"))
-        {
-            
-            string[][] data = Read(playerName);
-
-            SerializeRead(data, EventManager.sebiEvents);
-            
-
-            //Debug info
-            foreach (Eventinfo row in EventManager.sebiEvents)
-            {
-                Debug.Log(row.player_name + "," + row.type.ToString() + "," + row.time);
-            }
-        }
-        else if (playerName.Equals("Marc"))
-        {
-            
-            string[][] data = Read(playerName);
-
-            SerializeRead(data, EventManager.marcEvents);
+        //    //Debug info
+        //    foreach(Eventinfo row in EventManager.carlosEvents)
+        //    {
+        //        //Debug.Log(row.player_name + "," + row.type + "," + row.time);
+        //    }
            
 
-            //Debug info
-            foreach (Eventinfo row in EventManager.marcEvents)
-            {
-                Debug.Log(row.player_name + "," + row.type.ToString() + "," + row.time);
-            }
-        }
+        //}
+        //else if(playerName.Equals("Sebi"))
+        //{
+            
+        //    string[][] data = Read(playerName);
+        //    SerializeRead(data, EventManager.sebiEvents);
+            
+
+        //    //Debug info
+        //    foreach (Eventinfo row in EventManager.sebiEvents)
+        //    {
+        //        Debug.Log(row.player_name + "," + row.type.ToString() + "," + row.time);
+        //    }
+        //}
+        //else if (playerName.Equals("Marc"))
+        //{
+            
+        //    string[][] data = Read(playerName);
+
+        //    SerializeRead(data, EventManager.marcEvents);
+           
+
+        //    //Debug info
+        //    foreach (Eventinfo row in EventManager.marcEvents)
+        //    {
+        //        Debug.Log(row.player_name + "," + row.type.ToString() + "," + row.time);
+        //    }
+        //}
     }
+
+    public static void ReadData(VisualizationManager.User playerName)
+    {
+        Debug.Log("Reading data... ");
+       
+        switch (playerName)
+        {
+            case VisualizationManager.User.Carlos:
+               
+                SerializeRead(Read("Carlos"), EventManager.carlosEvents);
+                break;
+            case VisualizationManager.User.Sebi:
+                
+                SerializeRead(Read("Sebi"), EventManager.sebiEvents);
+                break;
+            case VisualizationManager.User.Marc:
+               
+                SerializeRead(Read("Marc"), EventManager.marcEvents);
+                break;
+            case VisualizationManager.User.Peter:
+               
+                SerializeRead(Read("Peter"), EventManager.joseEvents);
+                break;
+            case VisualizationManager.User.Gerard:
+               
+                SerializeRead(Read("Gerard"), EventManager.gerardEvents);
+                break;
+        }
+
+
+
+        //string[][] data1 = Read(playerName);
+        //SerializeRead(data1, EventManager.carlosEvents);
+
+        //string[][] data2 = Read(playerName);
+        //SerializeRead(data2, EventManager.sebiEvents);
+
+        //string[][] data3 = Read(playerName);
+        //SerializeRead(data3, EventManager.marcEvents);
+
+        //string[][] data4 = Read(playerName);
+        //SerializeRead(data4, EventManager.joseEvents);
+
+        //string[][] data5 = Read(playerName);
+        //SerializeRead(data5, EventManager.gerardEvents);
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -62,7 +125,7 @@ public class ReaderCSV : MonoBehaviour
         
     }
 
-    public void SerializeRead(string[][] data, List<Eventinfo> selectedList)
+    public static void SerializeRead(string[][] data, List<Eventinfo> selectedList)
     {
         if (data == null)
             return;
@@ -96,7 +159,7 @@ public class ReaderCSV : MonoBehaviour
 
     }
 
-    public string[][] Read(string playerName)
+    public static string[][] Read(string playerName)
     {
         string filepath = Application.dataPath + "/CSV/" + "SpatialEvents.csv";
 
@@ -119,7 +182,13 @@ public class ReaderCSV : MonoBehaviour
             List<string[]> ret = new List<string[]>();
             foreach (string row in rows)
             {
-                if(row.Contains(playerName))
+                //if(playerName == EventManager.GetUserTypeFromString(row))
+                //{
+                //    string[] rowData = row.Split(',');
+                //    ret.Add(rowData);
+                //}
+
+                if (row.Contains(playerName))
                 {
                     string[] rowData = row.Split(',');
                     ret.Add(rowData);

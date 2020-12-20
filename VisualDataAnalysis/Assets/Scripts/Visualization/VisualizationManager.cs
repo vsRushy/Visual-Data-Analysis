@@ -7,7 +7,8 @@ public class VisualizationManager : MonoBehaviour
 {
     private static VisualizationManager _instance;
     public static VisualizationManager Instance { get { return _instance; } }
-
+   
+    [Serializable]
     public enum User
     {
         All = 0,
