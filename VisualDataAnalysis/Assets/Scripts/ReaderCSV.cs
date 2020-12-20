@@ -150,11 +150,17 @@ public class ReaderCSV : MonoBehaviour
             String name = data[row][0];
             CUSTOM_EVENT_TYPE type = (CUSTOM_EVENT_TYPE)Enum.Parse(typeof(CUSTOM_EVENT_TYPE), data[row][1]);
             String time_event = data[row][2];
-            Vector3 position = new Vector3(float.Parse(data[row][3]), float.Parse(data[row][4]), float.Parse(data[row][5]));
+            float pos_x;
+            float pos_y;
+            float pos_z;
+            float.TryParse(data[row][3], System.Globalization.NumberStyles.Float, EventManager.culture, out pos_x);
+            float.TryParse(data[row][4], System.Globalization.NumberStyles.Float, EventManager.culture, out pos_y);
+            float.TryParse(data[row][5], System.Globalization.NumberStyles.Float, EventManager.culture, out pos_z);
+
+            Vector3 position = new Vector3(pos_x, pos_y, pos_z);
             Eventinfo n_event = new Eventinfo(name, type, position, 0);
             n_event.time = time_event;
 
-            //Add row info
             selectedList.Add(n_event);
         }
 
