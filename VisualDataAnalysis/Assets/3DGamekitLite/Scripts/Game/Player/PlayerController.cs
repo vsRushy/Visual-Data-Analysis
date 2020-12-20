@@ -2,6 +2,7 @@ using UnityEngine;
 using Gamekit3D.Message;
 using System.Collections;
 using UnityEngine.XR.WSA;
+using UnityEngine.Events;
 
 namespace Gamekit3D
 {
@@ -13,6 +14,9 @@ namespace Gamekit3D
         public static PlayerController instance { get { return s_Instance; } }
 
         public bool respawning { get { return m_Respawning; } }
+
+        public UnityEvent OnJump;
+        public UnityEvent OnAttack;
 
         public float maxForwardSpeed = 8f;        // How fast Ellen can run.
         public float gravity = 20f;               // How fast Ellen accelerates downwards when airborne.
@@ -99,6 +103,7 @@ namespace Gamekit3D
 
         // Tags
         readonly int m_HashBlockInput = Animator.StringToHash("BlockInput");
+
 
         protected bool IsMoveInput
         {
@@ -445,6 +450,7 @@ namespace Gamekit3D
             if (!m_IsGrounded && m_PreviouslyGrounded && m_VerticalSpeed > 0f)
             {
                 emoteJumpPlayer.PlayRandomClip();
+                OnJump.Invoke();
             }
 
             if (m_CurrentStateInfo.shortNameHash == m_HashHurt && m_PreviousCurrentStateInfo.shortNameHash != m_HashHurt)
@@ -463,6 +469,7 @@ namespace Gamekit3D
                 m_CurrentStateInfo.shortNameHash == m_HashEllenCombo4 && m_PreviousCurrentStateInfo.shortNameHash != m_HashEllenCombo4)
             {
                 emoteAttackPlayer.PlayRandomClip();
+                OnAttack.Invoke();
             }
         }
 

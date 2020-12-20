@@ -278,6 +278,7 @@ public class VisualizationManager : MonoBehaviour
     {
         // Reset counts
         maxCounts = 0;
+        individualMaxCounts = 0;
 
         // Initialize grid
         grid = new HeatObject[width, height];

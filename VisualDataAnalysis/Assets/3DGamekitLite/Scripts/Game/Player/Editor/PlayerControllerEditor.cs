@@ -29,6 +29,9 @@ namespace Gamekit3D
         SerializedProperty m_EmoteAttackPlayerProp;
         SerializedProperty m_EmoteJumpPlayerProp;
 
+        SerializedProperty OnJump;
+        SerializedProperty OnAttack;
+
         GUIContent m_ScriptContent = new GUIContent("Script");
 
         GUIContent m_MaxForwardSpeedContent = new GUIContent("Max Forward Speed", "How fast Ellen can run.");
@@ -69,6 +72,9 @@ namespace Gamekit3D
             m_EmoteDeathPlayerProp = serializedObject.FindProperty("emoteDeathPlayer");
             m_EmoteAttackPlayerProp = serializedObject.FindProperty("emoteAttackPlayer");
             m_EmoteJumpPlayerProp = serializedObject.FindProperty("emoteJumpPlayer");
+
+            OnJump = serializedObject.FindProperty("OnJump");
+            OnAttack = serializedObject.FindProperty("OnAttack");
         }
 
         public override void OnInspectorGUI()
@@ -87,7 +93,8 @@ namespace Gamekit3D
 
             EditorGUILayout.PropertyField(m_IdleTimeoutProp, m_IdleTimeoutContent);
             EditorGUILayout.PropertyField(m_CanAttackProp, m_CanAttackContent);
-
+            EditorGUILayout.PropertyField(OnJump);
+            EditorGUILayout.PropertyField(OnAttack);
             EditorGUILayout.Space();
 
             m_MeleeWeaponProp.isExpanded = EditorGUILayout.Foldout(m_MeleeWeaponProp.isExpanded, "References");
