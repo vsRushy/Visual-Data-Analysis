@@ -74,28 +74,28 @@ public class ReaderCSV : MonoBehaviour
 
     public static void ReadData(VisualizationManager.User playerName)
     {
-        Debug.Log("Reading data... ");
+        
        
         switch (playerName)
         {
             case VisualizationManager.User.Carlos:
-               
+                Debug.Log("Reading data - Carlos");
                 SerializeRead(Read("Carlos"), EventManager.carlosEvents);
                 break;
             case VisualizationManager.User.Sebi:
-                
+                Debug.Log("Reading data - Sebi");
                 SerializeRead(Read("Sebi"), EventManager.sebiEvents);
                 break;
             case VisualizationManager.User.Marc:
-               
+                Debug.Log("Reading data - Marc");
                 SerializeRead(Read("Marc"), EventManager.marcEvents);
                 break;
             case VisualizationManager.User.Peter:
-               
+                Debug.Log("Reading data - Peter");
                 SerializeRead(Read("Peter"), EventManager.joseEvents);
                 break;
             case VisualizationManager.User.Gerard:
-               
+                Debug.Log("Reading data - Gerard");
                 SerializeRead(Read("Gerard"), EventManager.gerardEvents);
                 break;
         }
@@ -196,6 +196,7 @@ public class ReaderCSV : MonoBehaviour
 
             }
 
+            read.Close();
             return ret.ToArray();
             
         }
