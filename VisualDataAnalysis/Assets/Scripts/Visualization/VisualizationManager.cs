@@ -108,7 +108,7 @@ public class VisualizationManager : MonoBehaviour
 
                 // Change its material so each  tile has its own that can be customized
                 Material myNewMaterial = new Material(newObj.GetComponent<Renderer>().material);
-                myNewMaterial.color = Color.white - new Color(0,0,0, 1-alpha);
+                myNewMaterial.color = Color.white - new Color(0,0,0, 1);
                 newObj.GetComponent<Renderer>().material = myNewMaterial;
 
                 //  Set each object to the correspondent grid
