@@ -172,6 +172,8 @@ public class EventManager : MonoBehaviour
                 break;
             case CUSTOM_EVENT_TYPE.ACTIVATE_SWITCH:
                 break;
+            case CUSTOM_EVENT_TYPE.LEVEL_ENTER:
+                break;
             default:
                 break;
         }
@@ -187,7 +189,8 @@ public enum CUSTOM_EVENT_TYPE
     DEATH,
     RECEIVE_DAMAGE,
     ENEMY_KILLED,
-    ACTIVATE_SWITCH
+    ACTIVATE_SWITCH,
+    LEVEL_ENTER
 }
 
 public struct Eventinfo
