@@ -71,8 +71,14 @@ public class EventManager : MonoBehaviour
     {
        
         Debug.Log("Writting data... ");
+        // New data
         WriterCSV.WriterData(events);
-
+        // Old data
+        WriterCSV.WriterData(carlosEvents);
+        WriterCSV.WriterData(sebiEvents);
+        WriterCSV.WriterData(marcEvents);
+        WriterCSV.WriterData(gerardEvents);
+        WriterCSV.WriterData(joseEvents);
     }
 
     // Update is called once per frame

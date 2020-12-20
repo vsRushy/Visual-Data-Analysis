@@ -52,20 +52,27 @@ public class WriterCSV : MonoBehaviour
 
     public static void WriterData(List<Eventinfo> data)
     {
+        if (data.Count == 0)
+            return;
+
         List<string[]> rowData = new List<string[]>();
         //Creating Path
         string filepath = Application.dataPath + "/CSV/" + "SpatialEvents.csv";
-        
-        // Creating First row of titles manually..
-        string[] rowDataTemp = new string[6];
-        rowDataTemp[0] = "PlayerName";
-        rowDataTemp[1] = "Event";
-        rowDataTemp[2] = "Timestamp";
-        rowDataTemp[3] = "Position_X";
-        rowDataTemp[4] = "Position_Y";
-        rowDataTemp[5] = "Position_Z";
-        rowData.Add(rowDataTemp);
 
+        string[] rowDataTemp = new string[6];
+
+        // Creating First row of titles manually..
+        if (!File.Exists(filepath))
+        {
+            rowDataTemp[0] = "PlayerName";
+            rowDataTemp[1] = "Event";
+            rowDataTemp[2] = "Timestamp";
+            rowDataTemp[3] = "Position_X";
+            rowDataTemp[4] = "Position_Y";
+            rowDataTemp[5] = "Position_Z";
+            rowData.Add(rowDataTemp);
+            Debug.Log("Not Exist");
+        }
         // You can add up the values in as many cells as you want.
         foreach(Eventinfo row in data)
         {
@@ -97,7 +104,7 @@ public class WriterCSV : MonoBehaviour
 
         //string filePath = getPath();
 
-        StreamWriter outStream = System.IO.File.CreateText(filepath);
+        StreamWriter outStream = System.IO.File.AppendText(filepath);
         outStream.WriteLine(sb);
         outStream.Close();
 
