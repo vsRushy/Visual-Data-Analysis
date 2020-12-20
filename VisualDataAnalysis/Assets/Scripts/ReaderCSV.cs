@@ -147,10 +147,11 @@ public class ReaderCSV : MonoBehaviour
              */
 
             //Create (NOTE: Usage of another constructor of Eventinfo)
-            String time_event = data[row][3];
-            Eventinfo n_event = new Eventinfo(data[row][0], uint.Parse(data[row][1]), (CUSTOM_EVENT_TYPE)Enum.Parse(typeof(CUSTOM_EVENT_TYPE), data[row][2]),
-                new Vector3(float.Parse(data[row][4]), float.Parse(data[row][5]), float.Parse(data[row][6])),
-                uint.Parse(data[row][7]));
+            String name = data[row][0];
+            CUSTOM_EVENT_TYPE type = (CUSTOM_EVENT_TYPE)Enum.Parse(typeof(CUSTOM_EVENT_TYPE), data[row][1]);
+            String time_event = data[row][2];
+            Vector3 position = new Vector3(float.Parse(data[row][3]), float.Parse(data[row][4]), float.Parse(data[row][5]));
+            Eventinfo n_event = new Eventinfo(name, type, position, 0);
             n_event.time = time_event;
 
             //Add row info

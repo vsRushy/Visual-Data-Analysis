@@ -123,9 +123,8 @@ public class VisualizationManager : MonoBehaviour
         // 2 rounds:
         // The first one to actually have the relative 100% to calculate color and height 
         // The second one to actually apply values relative to that 100%
-       
-        //List<Eventinfo> eventList = GetListByUser(user_filter);    // TODO: Uncomment when reader works
-        List<Eventinfo> eventList = EventManager.events;
+
+        List<Eventinfo> eventList = GetListByUser();    
 
         // Firstly we get the max count of events of type X and the actual max Count of an individual tile
         for (int i = 0; i < eventList.Count; ++i)

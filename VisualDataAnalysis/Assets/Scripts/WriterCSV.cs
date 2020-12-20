@@ -57,45 +57,28 @@ public class WriterCSV : MonoBehaviour
         string filepath = Application.dataPath + "/CSV/" + "SpatialEvents.csv";
         
         // Creating First row of titles manually..
-        string[] rowDataTemp = new string[8];
+        string[] rowDataTemp = new string[6];
         rowDataTemp[0] = "PlayerName";
-        rowDataTemp[1] = "PlayerId";
-        rowDataTemp[2] = "Event";
-        rowDataTemp[3] = "Timestamp";
-        rowDataTemp[4] = "Position_X";
-        rowDataTemp[5] = "Position_Y";
-        rowDataTemp[6] = "Position_Z";
-        rowDataTemp[7] = "Stage";
+        rowDataTemp[1] = "Event";
+        rowDataTemp[2] = "Timestamp";
+        rowDataTemp[3] = "Position_X";
+        rowDataTemp[4] = "Position_Y";
+        rowDataTemp[5] = "Position_Z";
         rowData.Add(rowDataTemp);
 
         // You can add up the values in as many cells as you want.
         foreach(Eventinfo row in data)
         {
-            rowDataTemp = new string[8];
+            rowDataTemp = new string[6];
             rowDataTemp[0] = row.player_name;
-            rowDataTemp[1] = row.player_id.ToString();
-            rowDataTemp[2] = row.type.ToString();
-            rowDataTemp[3] = row.time;
-            rowDataTemp[4] = row.position.x.ToString();
-            rowDataTemp[5] = row.position.y.ToString();
-            rowDataTemp[6] = row.position.z.ToString();
-            rowDataTemp[7] = row.stage.ToString();
+            rowDataTemp[1] = row.type.ToString();
+            rowDataTemp[2] = row.time;
+            rowDataTemp[3] = row.position.x.ToString();
+            rowDataTemp[4] = row.position.y.ToString();
+            rowDataTemp[5] = row.position.z.ToString();
             rowData.Add(rowDataTemp);
         }
-        for (int i = 0; i < 10; i++)
-        {
-            rowDataTemp = new string[8];
-            rowDataTemp[0] = "Carlos";
-            rowDataTemp[1] = 1.ToString();
-            rowDataTemp[2] = CUSTOM_EVENT_TYPE.POSITION.ToString();
-            rowDataTemp[3] = System.DateTime.Now.ToString();
-            rowDataTemp[4] = UnityEngine.Random.Range(-10, 10).ToString();
-            rowDataTemp[5] = UnityEngine.Random.Range(-10, 10).ToString();
-            rowDataTemp[6] = UnityEngine.Random.Range(-10, 10).ToString();
-            rowDataTemp[7] = "2";
-            rowData.Add(rowDataTemp);
-        }
-
+        
         string[][] output = new string[rowData.Count][];
 
         for (int i = 0; i < output.Length; i++)

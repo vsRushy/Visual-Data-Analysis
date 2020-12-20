@@ -10,9 +10,6 @@ public class EventManager : MonoBehaviour
     
     public VisualizationManager.User userName = VisualizationManager.User.All;
 
-    // player id
-    uint playerId = 0;
-
     // to keep track of the stage
     uint stage = 0;
 
@@ -74,25 +71,8 @@ public class EventManager : MonoBehaviour
     {
        
         Debug.Log("Writting data... ");
+        WriterCSV.WriterData(events);
 
-        switch (userName)
-        {
-            case VisualizationManager.User.Carlos:
-                WriterCSV.WriterData(carlosEvents);
-                break;
-            case VisualizationManager.User.Sebi:
-                WriterCSV.WriterData(sebiEvents);
-                break;
-            case VisualizationManager.User.Marc:
-                WriterCSV.WriterData(marcEvents);
-                break;
-            case VisualizationManager.User.Peter:
-                WriterCSV.WriterData(joseEvents);
-                break;
-            case VisualizationManager.User.Gerard:
-                WriterCSV.WriterData(gerardEvents);
-                break;
-        }
     }
 
     // Update is called once per frame
@@ -126,7 +106,7 @@ public class EventManager : MonoBehaviour
     {
         if (player == null)
             return;
-        Eventinfo e = new Eventinfo(userName.ToString(), playerId, type, player.transform.position, stage);
+        Eventinfo e = new Eventinfo(userName.ToString(), type, player.transform.position, stage);
         pendingEvents.Add(e);
     }
 
@@ -155,8 +135,8 @@ public class EventManager : MonoBehaviour
                     ret.AddRange(carlosEvents);
                     ret.AddRange(sebiEvents);
                     ret.AddRange(marcEvents);
-                    //ret.AddRange(peterEvents);
-                    //ret.AddRange(gerardEvents);
+                    ret.AddRange(joseEvents);
+                    ret.AddRange(gerardEvents);
                 }
                 break;
             case VisualizationManager.User.Carlos:
@@ -166,8 +146,7 @@ public class EventManager : MonoBehaviour
                 break;
             case VisualizationManager.User.Gerard:
                 {
-                    //ret = gerardEvents;
-                    Debug.Log("User Not ready yet");
+                    ret = gerardEvents;
                 }
                 break;
             case VisualizationManager.User.Marc:
@@ -177,8 +156,7 @@ public class EventManager : MonoBehaviour
                 break;
             case VisualizationManager.User.Peter:
                 {
-                    //ret = peterEvents;
-                    Debug.Log("User Not ready yet");
+                    ret = joseEvents;
                 }
                 break;
             case VisualizationManager.User.Sebi:
@@ -251,9 +229,6 @@ public struct Eventinfo
     // Player name.
     public String player_name;
 
-    // Player id.
-    public uint player_id;
-
     // Stage.
     public uint stage;
 
@@ -261,14 +236,13 @@ public struct Eventinfo
     public Vector3 position;
 
     // TODO
-    public Eventinfo(String player_name, uint player_id, CUSTOM_EVENT_TYPE type, Vector3 position, uint stage)
+    public Eventinfo(String player_name, CUSTOM_EVENT_TYPE type, Vector3 position, uint stage)
     {
         this.seconds = Time.realtimeSinceStartup;
         this.time_span = TimeSpan.FromSeconds(seconds);
         this.time = String.Format("{0:D2}:{1:D2}:{2:D2}", time_span.Hours, time_span.Minutes, time_span.Seconds);
 
         this.player_name = player_name;
-        this.player_id = player_id;
         this.type = type;
         this.position = position;
         this.stage = stage;
