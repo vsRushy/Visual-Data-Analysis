@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gamekit3D
 {
@@ -9,12 +10,14 @@ namespace Gamekit3D
     {
         public new AudioSource audio;
 
+        public UnityEvent OnDeath;
 
         void OnTriggerEnter(Collider other)
         {
             var pc = other.GetComponent<PlayerController>();
             if (pc != null)
             {
+                OnDeath.Invoke();
                 pc.Die(new Damageable.DamageMessage());
             }
             if (audio != null)
