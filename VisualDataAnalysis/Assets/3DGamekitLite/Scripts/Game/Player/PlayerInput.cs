@@ -27,6 +27,7 @@ public class PlayerInput : MonoBehaviour
 
     // Added: event for jump, so that we call analytics from the inspector instead of the code
     public UnityEvent OnJump;
+    public UnityEvent OnAttack;
 
     public Vector2 MoveInput
     {
@@ -63,7 +64,14 @@ public class PlayerInput : MonoBehaviour
 
     public bool Attack
     {
-        get { return m_Attack && !playerControllerInputBlocked && !m_ExternalInputBlocked; }
+        get
+        {
+            bool ret;
+            ret = (m_Attack && !playerControllerInputBlocked && !m_ExternalInputBlocked);
+            if (ret)
+                OnAttack.Invoke();
+            return ret;
+        }
     }
 
     public bool Pause
