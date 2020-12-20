@@ -7,7 +7,8 @@ public class VisualizationManager : MonoBehaviour
 {
     private static VisualizationManager _instance;
     public static VisualizationManager Instance { get { return _instance; } }
-
+   
+    [Serializable]
     public enum User
     {
         All = 0,
@@ -17,12 +18,6 @@ public class VisualizationManager : MonoBehaviour
         Gerard,
         Sebi
     }
-    public enum GraphType
-    {
-        HEATMAP = 0,
-        GRAPH
-    }
-
     public enum HeatmapFilter
     {
         POSITION = 0,
@@ -32,21 +27,10 @@ public class VisualizationManager : MonoBehaviour
         RECIEVE_DMG,
         ENEMY_KILLED,
     }
-    public enum GraphFilter
-    {
-        Activate_Switch_1 = 0,
-        Activate_Switch_2,
-        Activate_Switch_3,
-        WIN_GAME,
-        ENTER_GAME
-    }
-
 
     // ------------------------ Filters ------------------------
     public User user_filter = User.All;
-    public GraphType graph_type = GraphType.HEATMAP;
     public HeatmapFilter heatmap_filter = HeatmapFilter.POSITION;
-    //public GraphFilter graph_filter = GraphFilter.Activate_Switch_1; // If we have time? xd
 
     // ------------------------ Customization ------------------------
     public int width = 10;
